@@ -13,6 +13,8 @@
                     return "SCP-049";
                 case RoleType.Scp079:
                     return "SCP-079";
+                case RoleType.Scp096:
+                    return "SCP-096";
                 case RoleType.Scp106:
                     return "SCP-106";
                 case RoleType.Scp173:
