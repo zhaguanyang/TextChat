@@ -13,7 +13,3 @@
 | message_format | "{0} {1}: {2}"    | Format for the message to be sent. SCP {0} Name {1} Message {2} |
  | hint_duration  | 7                 | How long messages are displayed for in seconds.                 |
  | history_length | 1                 | How many messages to show in the chat history.                  |
-
-```diff
-- s
-```
