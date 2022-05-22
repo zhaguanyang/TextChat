@@ -13,9 +13,9 @@ namespace SCPChat.Commands
     [CommandHandler(typeof(ClientCommandHandler))]
     internal class ChatCommand : ICommand
     {
-        public string Command { get; } = "scpchat";
+        public string Command { get; } = "chat";
         public string[] Aliases { get; } = Plugin.SharedConfig.Aliases?.ToArray() ?? new string[] { "chat" };
-        public string Description { get; } = "Chat with other SCPs";
+        public string Description { get; } = "Chat with other players";
 
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
@@ -28,40 +28,34 @@ namespace SCPChat.Commands
 
             Player p = Player.Get(((PlayerCommandSender)sender).ReferenceHub);
 
-            if (p.Role.Side != Side.Scp)
-            {
-                response = "This command can only be ran by an SCP!";
-                return true;
-            }
-
             if (arguments.Count < 1)
             {
-                response = "Usage: .scpchat <message>";
+                response = "用法: .c <内容>";
                 return true;
             }
 
             string message = string.Join(" ", arguments);
 
-            string text = string.Format(Plugin.SharedConfig.MessageFormat, p.Role.ToFormattedString(), p.Nickname,
+            string text = string.Format(Plugin.SharedConfig.MessageFormat, p.Nickname,
                 message);
 
             Plugin.ChatMessages.Add(text);
 
 
-            foreach (Player scp in Player.Get(Team.SCP).ToList())
+            foreach (Player player in Player.List)
             {
                 if (Plugin.SharedConfig.HistoryLength <= 1)
-                    scp.ShowManagedHint($"\n\n<align=left>{text}</align>", Plugin.SharedConfig.HintDuration, false, DisplayLocation.Top);
+                    player.ShowManagedHint($"\n\n<align=left>{text}</align>", Plugin.SharedConfig.HintDuration, false, DisplayLocation.Top);
                 else
                 {
-                    scp.ShowManagedHint(
+                    player.ShowManagedHint(
                         $"\n\n<align=left>{string.Join("\n", Plugin.ChatMessages.Skip(Math.Max(0, Plugin.ChatMessages.Count - Plugin.SharedConfig.HistoryLength)))}</align>",
                         Plugin.SharedConfig.HintDuration, true, DisplayLocation.Top);
                 }
             }
 
 
-            response = "Message has been sent!";
+            response = "消息已发送!";
             return true;
         }
     }

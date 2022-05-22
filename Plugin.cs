@@ -13,7 +13,7 @@ namespace SCPChat
     public class Plugin : Plugin<Config>
     {
         public override string Name => typeof(Plugin).Namespace;
-        public override string Author => "x3rt";
+        public override string Author => "x3rt, modified by Killla";
         public override Version RequiredExiledVersion { get; } = new Version(5, 2, 0);
         public override Version Version { get; } = new Version(1, 1, 0);
         public override PluginPriority Priority { get; } = PluginPriority.Last;
